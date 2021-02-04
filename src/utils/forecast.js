@@ -10,8 +10,12 @@ const url = 'http://api.weatherstack.com/current?access_key=1265ab2ee5abb63d3b4f
         } else if (body.error) {
             callback('Unable to find location', undefined)
         } else {
-             callback(undefined, "Weather News🌦 " + body.current.weather_descriptions[0] + ". It is currently " + 
-           body.current.temperature + " degrees out. It feels like " + body.current.feelslike + "% chance of rain.")
+            const celsius = ((body.current.temperature - 32) * 5) / 9;
+            const celsiusRound = Math.round(celsius);
+             callback(
+                undefined,
+                "Weather News🌦 " + body.current.weather_descriptions[0] + ". It is currently " + 
+           body.current.temperature + " °F. " + 'It is currently ' + celsiusRound + ' °C. '  + " It feels like " + body.current.feelslike + "% chance of rain." + ' The  humidity is ' + body.current.humidity + '%')
         }
     })
 }
